@@ -38,15 +38,15 @@ def main():
         result = model(frame, agnostic_nms=True)[0]
         detections = sv.Detections.from_yolov8(result)
 
-        # Contar personas
+    
         current_person_count = sum(1 for _, confidence, class_id, _ in detections
                                    if model.model.names[class_id] == "person" and confidence > 0.5)
 
-        # Mostrar el contador de personas en un cuadro blanco
+        
         cv2.rectangle(frame, (10, 10), (240, 60), (255, 255, 255), -1)
         cv2.putText(frame, f"Personas: {current_person_count}", (20, 50), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 0), 2)
 
-        # Anotar detecciones en el fotograma
+       
         frame = box_annotator.annotate(
             scene=frame, 
             detections=detections
